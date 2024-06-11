@@ -20,9 +20,9 @@ int test_matVecMul() {
     matVecMul(h_A, h_x, h_y, rows, cols);
 
     // Print the result
-    //for (int i = 0; i < rows; ++i) {
-    //    printf("%f+%fi ", cuCrealf(h_y[i]), cuCimagf(h_y[i]));
-    //}
+    for (int i = 0; i < rows; ++i) {
+        printf("%f+%fi ", cuCrealf(h_y[i]), cuCimagf(h_y[i]));
+    }
     printf("\r\n");
 
     return 0;
