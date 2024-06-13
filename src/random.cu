@@ -18,6 +18,38 @@ __global__ void generate_random_numbers(curandState *state, float *randomNumbers
     randomNumbers[idx] = randNum;
 }
 
+// Function to swap two elements
+void swap(float *xp, float *yp) {
+    float temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+// Function to perform Bubble Sort
+void bubbleSort(float arr[], int n) {
+    int i, j;
+    for (i = 0; i < n-1; i++) {
+        for (j = 0; j < n-i-1; j++) {
+            if (arr[j] > arr[j+1]) {
+                swap(&arr[j], &arr[j+1]);
+            }
+        }
+    }
+}
+
+// Function to count unique numbers in a sorted array
+int countUnique(float arr[], int n) {
+    if (n == 0) return 0;
+    
+    int count = 1; // there's at least one unique element
+    for (int i = 1; i < n; i++) {
+        if (arr[i] != arr[i-1]) {
+            count++;
+        }
+    }
+    return count;
+}
+
 int main()
 {
     // Number of threads per block
@@ -48,16 +80,21 @@ int main()
     cudaDeviceSynchronize();
 
     // Copy the generated random numbers back to the host if needed
-    // cudaMemcpy(...);
-
-    // Copy the generated random numbers back to the host if needed
     float *hostRandomNumbers = (float *)malloc(numThreads * sizeof(float));
     cudaMemcpy(hostRandomNumbers, randomNumbers, numThreads * sizeof(float), cudaMemcpyDeviceToHost);
 
-    for(int i = 0; i < numThreads; i++) {
-        std::cout << i << ": " << hostRandomNumbers[i] << std::endl;
-    }
+    //for(int i = 0; i < numThreads; i++) {
+    //    std::cout << i << ": " << hostRandomNumbers[i] << std::endl;
+    //}
 
+    bubbleSort(hostRandomNumbers, numThreads);
+
+    //for(int i = 0; i < numThreads; i++) {
+    //    std::cout << i << ": " << hostRandomNumbers[i] << std::endl;
+    //}
+
+    int uniqueCount = countUnique(hostRandomNumbers, numThreads);
+    std::cout << "Number of unique elements: " << uniqueCount << " in " << numThreads << std::endl;
 
     // Cleanup
     cudaFree(devStates);
