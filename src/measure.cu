@@ -89,28 +89,28 @@ int test_measure(int shot) {
         make_cuFloatComplex(0.6, 0.0), make_cuFloatComplex(0.2, 0.0)
     };
 
-    // Calculate the norm of the statevector
-    float norm = 0.0f;
-    for (int i = 0; i < len; ++i) {
-        float real_part = cuCrealf(h_statevector[i]);
-        float imag_part = cuCimagf(h_statevector[i]);
-        norm += real_part * real_part + imag_part * imag_part;
-    }
-    norm = sqrtf(norm);
+    // // Calculate the norm of the statevector
+    // float norm = 0.0f;
+    // for (int i = 0; i < len; ++i) {
+    //     float real_part = cuCrealf(h_statevector[i]);
+    //     float imag_part = cuCimagf(h_statevector[i]);
+    //     norm += real_part * real_part + imag_part * imag_part;
+    // }
+    // norm = sqrtf(norm);
 
-    // Normalize the statevector
-    for (int i = 0; i < len; ++i) {
-        float real_part = cuCrealf(h_statevector[i]);
-        float imag_part = cuCimagf(h_statevector[i]);
-        h_statevector[i] = make_cuFloatComplex(real_part / norm, imag_part / norm);
-    }
+    // // Normalize the statevector
+    // for (int i = 0; i < len; ++i) {
+    //     float real_part = cuCrealf(h_statevector[i]);
+    //     float imag_part = cuCimagf(h_statevector[i]);
+    //     h_statevector[i] = make_cuFloatComplex(real_part / norm, imag_part / norm);
+    // }
 
-    // Verify normalization
-    float sum = 0.0f;
-    for (int i = 0; i < len; ++i) {
-        float mag = cuCabsf(h_statevector[i]);
-        sum += mag * mag;
-    }
+    // // Verify normalization
+    // float sum = 0.0f;
+    // for (int i = 0; i < len; ++i) {
+    //     float mag = cuCabsf(h_statevector[i]);
+    //     sum += mag * mag;
+    // }
 
     // Device memory allocations
     cuFloatComplex* d_statevector;
