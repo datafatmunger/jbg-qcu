@@ -15,8 +15,8 @@ cuFloatComplex H::gateMatrix[H::matrixSize] = {
 cuFloatComplex CX::gateMatrix[CX::matrixSize] = {
     make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0),
     make_cuFloatComplex(0, 0), make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0),
-    make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(1, 0),
-    make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0),
+    make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(1, 0),
+    make_cuFloatComplex(0, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0),
     
 };
 

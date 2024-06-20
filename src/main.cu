@@ -66,6 +66,36 @@ int test_matVecMul() {
     return 0;
 }
 
+int test_cx() {
+    int rows = 4;
+
+    // Allocate memory for 4 cuFloatComplex elements
+    cuFloatComplex *h_y = (cuFloatComplex *)malloc(sizeof(cuFloatComplex) * rows);
+    if (h_y == NULL) {
+        fprintf(stderr, "Failed to allocate memory\n");
+        return 1;
+    }
+
+    int cols = 4;
+
+    // Qubit zero state - JBG
+    cuFloatComplex h_x[] = {make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0), make_cuFloatComplex(1, 0), make_cuFloatComplex(0, 0)};
+    
+
+    // Matrix-vector multiplication
+    matVecMul(CX::gateMatrix, h_x, h_y, rows, cols);
+
+    assert(1.0 == cuCrealf(h_y[0]));
+    assert(0.0 == cuCrealf(h_y[1]));
+    assert(0.0 == cuCrealf(h_y[2]));
+    assert(1.0 == cuCrealf(h_y[3]));
+
+    // Free the allocated memory
+    free(h_y);
+
+    return 0;
+}
+
 int test_measure() {
      int num_qubits = 2;
      cuFloatComplex h_statevector[] = {
@@ -194,7 +224,7 @@ int test_bell() {
 
     // Apply CX gate
     cuFloatComplex *v_2 = (cuFloatComplex *)malloc(sizeof(cuFloatComplex) * 2 * num_qubits);
-    matVecMul(CX::gateMatrix, v_1, v_2, 2, 2);
+    matVecMul(CX::gateMatrix, v_1, v_2, aRows * bRows, aCols * bCols);
 
     std::cout << "Statevector --" << std::endl;
     print_vector(v_2, 2 * num_qubits);
@@ -235,7 +265,8 @@ int main() {
     test_tensor();
     test_measure();
     test_superpos();
+    test_cx();
     test_bell();
-        
+
     return 0;
 }
